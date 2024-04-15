@@ -1,0 +1,52 @@
+DATA:
+  IMG_SIZE: 224
+  BATCH_SIZE: 32
+  SAMPLER_MODE: weighted
+  DATA_PATH: '/media/admingpu/Crucial X6/BH_final_dataset/fold_1/all_class/40x'
+MODEL:
+  TYPE: swin
+  NAME: swin_large_patch4_window7_224_22k
+  DROP_PATH_RATE: 0.2
+  SWIN:
+    EMBED_DIM: 192
+    DEPTHS: [ 2, 2, 18, 2 ]
+    NUM_HEADS: [ 6, 12, 24, 48 ]
+    WINDOW_SIZE: 7
+TRAIN:
+  EPOCHS: 100
+  WARMUP_EPOCHS: 5
+  WEIGHT_DECAY: 1e-8
+  BASE_LR: 1e-2
+  WARMUP_LR: 2e-08
+  MIN_LR: 1e-5
+  LINEAR_SCALE: False
+  ACCUMULATION_STEPS: 1 
+  LR_SCHEDULER:
+    NAME: 'cosine'
+    DECAY_EPOCHS: 10
+    DECAY_RATE: 0.9
+    WARMUP_PREFIX: True
+    GAMMA: 0.1
+    MULTISTEPS: []
+  OPTIMIZER:
+    NAME: 'sgd'
+    EPS: 1e-8
+    BETAS: (0.9, 0.999)
+    MOMENTUM: 0.9
+AUG:
+  COLOR_JITTER: 0.0
+  AUTO_AUGMENT: None
+  REPROB: 0.5
+  REMODE: 'pixel'
+  RECOUNT: 1
+  MIXUP: 0.4
+  CUTMIX: 1.0
+  CUTMIX_MINMAX: None
+  MIXUP_PROB: 1.0
+  MIXUP_SWITCH_PROB: 0.5
+  MIXUP_MODE: 'batch'    
+  HFLIP_PROB: 0.5
+  VFLIP_PROB: 0.5
+TEST:
+  CROP: True
+TAG: 'fold_1_x40'
